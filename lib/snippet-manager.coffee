@@ -151,10 +151,10 @@ class SnippetManager extends LTool
     te = atom.workspace.getActiveTextEditor()
 
     # First, check if there is a selection, and if so, add $..$ around it
-    if text =  te.getSelectedText()
-      text = text.replace(/\\/g, "\\\\")
-      range = te.getSelectedBufferRange()
-      te.setSelectedBufferRange(range, '')
+    range = te.getSelectedBufferRange()
+    text = te.getTextInBufferRange(range)
+    text = text.replace(/\\/g, "\\\\")
+    if text
       @snippetService.insertSnippet("\$#{text}\$")
       return
 
@@ -186,11 +186,10 @@ class SnippetManager extends LTool
     te = atom.workspace.getActiveTextEditor()
 
     # First, check if there is a selection, and if so, add quotes around it
-    if text =  te.getSelectedText()
-      text = text.replace(/\\/g, "\\\\")
-      range = te.getSelectedBufferRange()
-      te.setSelectedBufferRange(range, '')
-      # Use snippet to leave selection on (same as ST)
+    range = te.getSelectedBufferRange()
+    text = te.getTextInBufferRange(range)
+    text = text.replace(/\\/g, "\\\\")
+    if text
       @snippetService.insertSnippet("#{left}${1:#{text}}#{right}")
       return
 
